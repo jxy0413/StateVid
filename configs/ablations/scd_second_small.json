@@ -1,0 +1,26 @@
+{
+  "task": "scd",
+  "dataset": "SECOND",
+  "manifest": "data/second/manifest.json",
+  "model": {
+    "variant": "conditional_multiplicative",
+    "depth_factor": 3,
+    "grid_size": 16,
+    "bottleneck_ratio": 4,
+    "pretrained_backbone": null,
+    "num_classes": 7
+  },
+  "train": {
+    "epochs": 100,
+    "max_steps": null,
+    "batch_size": 8,
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "crop_size": 256,
+    "amp": true,
+    "accumulation_steps": 1,
+    "eval_every": 1000,
+    "pseudo_weight": 0.0
+  }
+}

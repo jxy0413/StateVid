@@ -1,0 +1,31 @@
+{
+  "task": "cc",
+  "dataset": "DUBAI-CC",
+  "manifest": "data/dubai_cc/manifest.json",
+  "model": {
+    "variant": "conditional_multiplicative",
+    "depth_factor": 5,
+    "grid_size": 16,
+    "bottleneck_ratio": 4,
+    "pretrained_backbone": null
+  },
+  "train": {
+    "epochs": 100,
+    "max_steps": null,
+    "batch_size": 8,
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "crop_size": 256,
+    "amp": true,
+    "accumulation_steps": 4,
+    "eval_every": 1000,
+    "selection_metric": "ROUGE_L"
+  },
+  "caption": {
+    "min_word_freq": 0,
+    "max_words": 50,
+    "beam_size": 3,
+    "metric_backend": "builtin"
+  }
+}

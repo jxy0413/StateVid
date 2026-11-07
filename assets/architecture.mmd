@@ -1,0 +1,34 @@
+---
+title: StateVid architecture
+---
+flowchart TB
+    inputs[Bi-temporal RGB images I1 and I2] --> sequence
+    grids[Three learnable 3 x 16 x 16 grids] --> resize[Bilinear resize to H x W]
+    resize --> sequence[Five-frame sequence: I1, P_pre, P_chg, P_post, I2]
+
+    subgraph encoder[Shared spatiotemporal encoder]
+        sequence --> stem[Stem: 24 channels, full resolution]
+        stem --> refine0[State update and difference modulation]
+        refine0 --> stage1[Stage 1: 24 channels, 5 residual units]
+        stage1 --> refine1[State update and difference modulation]
+        refine1 --> stage2[Stage 2: 48 channels, 10 residual units]
+        stage2 --> refine2[State update and difference modulation]
+        refine2 --> stage3[Stage 3: 96 channels, 25 residual units]
+        stage3 --> refine3[State update and difference modulation]
+    end
+
+    refine0 --> features[Four scales of pre-change, change, and post-change features]
+    refine1 --> features
+    refine2 --> features
+    refine3 --> features
+
+    features --> bcd[BCD: change features and final-scale role fusion]
+    features --> scd[SCD: independent pre, change, and post decoders]
+    features --> bda[BDA: pre-state localization and scale-wise role fusion]
+    features --> cc[CC: final-scale concatenation, 8 x 8 pooling, 128-D tokens]
+
+    bcd --> mask[Binary change mask]
+    scd --> sem[Two semantic maps and a change mask]
+    bda --> damage[Building localization and damage classes]
+    cc --> caption[One-layer autoregressive Transformer decoder]
+    caption --> words[Change description]

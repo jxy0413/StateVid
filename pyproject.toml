@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "statevid"
+version = "0.1.0"
+description = "A compact framework for remote sensing change understanding"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = {file = "LICENSE"}
+dependencies = [
+  "torch>=2.4,<2.9",
+  "torchvision>=0.19,<0.24",
+  "numpy>=1.24",
+  "Pillow>=10",
+  "pytorchvideo==0.1.5",
+  "fvcore==0.1.5.post20221221",
+  "iopath>=0.1.10",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "build>=1"]
+caption = ["pycocoevalcap>=1.2"]
+
+[project.scripts]
+statevid-train = "statevid.cli:train_main"
+statevid-eval = "statevid.cli:evaluate_main"
+statevid-predict = "statevid.cli:predict_main"
+statevid-inspect = "statevid.cli:inspect_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = [
+  "ignore:'saved_variables' is deprecated; use 'saved_tensors':DeprecationWarning:pytorchvideo.layers.swish",
+]

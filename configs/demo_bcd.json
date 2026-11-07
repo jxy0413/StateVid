@@ -1,0 +1,25 @@
+{
+  "task": "bcd",
+  "dataset": "SyntheticDemo",
+  "manifest": "data/demo_bcd/manifest.json",
+  "model": {
+    "variant": "conditional_multiplicative",
+    "depth_factor": 5,
+    "grid_size": 16,
+    "bottleneck_ratio": 4,
+    "pretrained_backbone": null
+  },
+  "train": {
+    "epochs": 1,
+    "max_steps": 2,
+    "batch_size": 2,
+    "lr": 0.0002,
+    "weight_decay": 0.0001,
+    "seed": 42,
+    "crop_size": 32,
+    "amp": false,
+    "accumulation_steps": 1,
+    "eval_every": 1,
+    "workers": 0
+  }
+}
